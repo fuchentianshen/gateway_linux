@@ -14,4 +14,3 @@ hello.o:hello.c hello.h
 
 clean:
 	rm $(objects) main
-	
