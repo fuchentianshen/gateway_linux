@@ -13,4 +13,4 @@ hello.o:hello.c hello.h
 	gcc -c hello.c -o hello.o
 
 clean:
-	rm $(objects) main
+	-rm $(objects) main
