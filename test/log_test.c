@@ -3,7 +3,7 @@
 int main(int argc, char const *argv[])
 {
     // 设置日志级别
-    // log_set_level(LOG_DEBUG);
+    log_set_level(LOG_DEBUG);
 
     // 输出日志
     log_trace("trace log...");
