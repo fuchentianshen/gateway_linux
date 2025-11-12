@@ -43,7 +43,7 @@ uint8_t app_message_jsonToBytes(char *json, uint8_t *bytes_buf, uint8_t buf_size
     if (len > buf_size)
     {
         log_error("缓冲区大小不够");
-        return -1;
+        return 0;
     }
     //解析json字符串
     cJSON *json_obj = cJSON_Parse(json);
