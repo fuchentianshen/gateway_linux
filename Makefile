@@ -2,6 +2,7 @@
 log:=thirdparty/log.c thirdparty/log.h
 json:=thirdparty/cJSON.c thirdparty/cJSON.h
 app_common:=app/app_common.c app/app_common.h
+app_message:=app/app_message.c app/app_message.h
 
 # -g 开启gdb的debug调试（生成的二进制文件中包含调试信息）
 # -O0 禁用优化（确保调试一致性）
@@ -24,6 +25,11 @@ json_test:test/json_test.c $(json) $(log)
 	-rm $@
 
 app_common_test:test/app_common_test.c $(app_common) $(log)
+	-gcc $^ -o $@ -I app -I thirdparty
+	-./$@
+	-rm $@
+
+app_message_test:test/app_message_test.c $(app_message) $(log) $(json)
 	-gcc $^ -o $@ -I app -I thirdparty
 	-./$@
 	-rm $@
