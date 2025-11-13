@@ -18,3 +18,14 @@ cancel: 03_cancel.c
 	-$(CC) $^ -o $@
 	-./$@
 	-rm $@
+
+race_condition: 04_race_condition.c
+	-$(CC) $^ -o $@
+	-./$@
+	-rm $@
+
+mqueue: 05_mqueue.c
+	-$(CC) $^ -o $@
+	-./$@
+	-rm $@
+
