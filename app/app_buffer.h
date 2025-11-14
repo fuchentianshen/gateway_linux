@@ -2,6 +2,7 @@
 #define __APP_BUFFER_H__
 
 #include <stdlib.h>
+#include <string.h>
 #include "log.h"
 
 // 小缓冲容器
