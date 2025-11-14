@@ -3,21 +3,24 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 #include "log.h"
 
 // 小缓冲容器
 typedef struct
 {
-    char *ptr;      // 数据指针
-    int total_size; // 总大小
-    int len;        // 当前已存储数据的长度
+    unsigned char *ptr; // 数据指针
+    int total_size;     // 总大小
+    int len;            // 当前已存储数据的长度
 } SubBuffer;
 // 缓冲区
 typedef struct
 {
-    SubBuffer *sub_buffer[2];
-    int read_index;
-    int write_index;
+    SubBuffer *sub_buffer[2];   // 子缓冲区
+    int read_index;             // 读索引
+    int write_index;            // 写索引
+    pthread_mutex_t read_lock;  // 读锁
+    pthread_mutex_t write_lock; // 写锁
 } Buffer;
 
 /**

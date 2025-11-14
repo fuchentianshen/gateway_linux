@@ -42,6 +42,10 @@ int app_buffer_write(Buffer *buffer, char *data, int len)
         return -1;
     }
 
+    // 在写数据时，需要加写锁
+    log_debug("在写数据时，需要加写锁");
+    pthread_mutex_lock(&buffer->write_lock);
+
     // 找到写缓冲区
     SubBuffer *w_buffer = buffer->sub_buffer[buffer->write_index];
     // 写入一个字节的数据长度，再写入数据本身
@@ -56,19 +60,35 @@ int app_buffer_write(Buffer *buffer, char *data, int len)
 
     // 更新len
     w_buffer->len += len;
+
+    // 写完数据，解写锁
+    log_debug("写完数据，解写锁");
+    pthread_mutex_unlock(&buffer->write_lock);
     return 0;
 }
 
 int app_buffer_read(Buffer *buffer, char *data_buff, int buff_size)
 {
+    // 在读数据时，需要加读锁
+    log_debug("在读数据时，需要加读锁");
+    pthread_mutex_lock(&buffer->read_lock);
     // 找到读缓冲区
     SubBuffer *r_buffer = buffer->sub_buffer[buffer->read_index];
 
     // 如果缓冲区为空，切换缓冲区
     if (r_buffer->len == 0)
     {
+        //切换缓冲区之前需要加写锁
+        log_debug("切换缓冲区之前需要加写锁");
+        pthread_mutex_lock(&buffer->write_lock);
+
         buffer->read_index = (buffer->read_index + 1) % 2;
         buffer->write_index = (buffer->write_index + 1) % 2;
+
+        // 切换缓冲区之后，解写锁
+        log_debug("切换缓冲区之后，解写锁");
+        pthread_mutex_unlock(&buffer->write_lock);
+        
         r_buffer = buffer->sub_buffer[buffer->read_index];
         // 如果缓冲区再为空，则返回-1
         if (r_buffer->len == 0)
@@ -94,5 +114,9 @@ int app_buffer_read(Buffer *buffer, char *data_buff, int buff_size)
     memmove(r_buffer->ptr, r_buffer->ptr + len + 1, r_buffer->len - len - 1);
     // 更新len
     r_buffer->len -= len + 1;
+
+    // 读完数据，解读锁
+    log_debug("读完数据，解读锁");
+    pthread_mutex_unlock(&buffer->read_lock);
     return 0;
 }
