@@ -88,7 +88,7 @@ int app_buffer_read(Buffer *buffer, char *data_buff, int buff_size)
         // 切换缓冲区之后，解写锁
         log_debug("切换缓冲区之后，解写锁");
         pthread_mutex_unlock(&buffer->write_lock);
-        
+
         r_buffer = buffer->sub_buffer[buffer->read_index];
         // 如果缓冲区再为空，则返回-1
         if (r_buffer->len == 0)

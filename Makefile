@@ -6,6 +6,8 @@ app_message:=app/app_message.c app/app_message.h
 app_mqtt:=app/app_mqtt.c app/app_mqtt.h
 app_pool:=app/app_pool.c app/app_pool.h
 app_buffer:=app/app_buffer.c app/app_buffer.h
+app_modbus:=app/app_modbus.c app/app_modbus.h
+ota_http:=ota/ota_http.c ota/ota_http.h
 
 # -g 开启gdb的debug调试（生成的二进制文件中包含调试信息）
 # -O0 禁用优化（确保调试一致性）
@@ -55,5 +57,14 @@ app_pool_test: test/app_pool_test.c $(app_pool) $(log)
 
 app_buffer_test: test/app_buffer_test.c $(app_buffer) $(log)
 	-gcc $^ -o $@ -I app -I thirdparty
+	-./$@
+	-rm $@
+
+app_modbus_test: test/app_modbus_test.c $(app_modbus) $(log)
+	-gcc $^ -o $@ -I app -I thirdparty -l modbus
+	-./$@
+	-rm $@
+ota_http_test: test/ota_http_test.c $(ota_http) $(log)
+	-gcc $^ -o $@ -I ota -I thirdparty -l curl
 	-./$@
 	-rm $@
