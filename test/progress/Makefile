@@ -15,3 +15,8 @@ waitpid:03_waitpid.c
 	-gcc $^ -o $@
 	-./$@
 	-rm $@
+
+signal:04_signal.c
+	-gcc $^ -o $@
+	-./$@
+	-rm $@
