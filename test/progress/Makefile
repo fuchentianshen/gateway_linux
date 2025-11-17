@@ -10,3 +10,8 @@ execve:02_execve.c other
 	-gcc $< -o $@
 	-./$@
 	-rm $@ other
+
+waitpid:03_waitpid.c
+	-gcc $^ -o $@
+	-./$@
+	-rm $@
