@@ -19,6 +19,7 @@ static void *thread_func(void *arg)
             task.task_fun(task.arg);
         }
     }
+    return NULL;
 }
 
 int app_pool_init(int num_threads)

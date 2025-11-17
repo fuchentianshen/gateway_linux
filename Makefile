@@ -8,6 +8,7 @@ app_pool:=app/app_pool.c app/app_pool.h
 app_buffer:=app/app_buffer.c app/app_buffer.h
 app_modbus:=app/app_modbus.c app/app_modbus.h
 ota_http:=ota/ota_http.c ota/ota_http.h
+app_device:=app/app_device.c app/app_device.h
 
 # -g 开启gdb的debug调试（生成的二进制文件中包含调试信息）
 # -O0 禁用优化（确保调试一致性）
@@ -64,6 +65,16 @@ app_modbus_test: test/app_modbus_test.c $(app_modbus) $(log)
 	-gcc $^ -o $@ -I app -I thirdparty -l modbus
 	-./$@
 	-rm $@
+
+
+device_objs:=$(app_device) $(log) $(json) $(app_buffer)\
+	$(app_modbus) $(app_pool) $(app_mqtt) $(app_message) 
+app_device_test: test/app_device_test.c $(device_objs)
+	-$(CC)  $^ -o $@ -Ithirdparty -Iapp -lmodbus -lpaho-mqtt3c
+	./$@
+	-rm $@
+
+
 ota_http_test: test/ota_http_test.c $(ota_http) $(log)
 	-gcc $^ -o $@ -I ota -I thirdparty -l curl
 	-./$@

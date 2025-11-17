@@ -1,0 +1,1 @@
+#include "ota_version.h"

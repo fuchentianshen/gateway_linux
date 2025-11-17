@@ -5,7 +5,7 @@ static SubBuffer *init_sub_buffer(int total_size)
 {
     // 申请空间
     SubBuffer *sub_buffer = (SubBuffer *)malloc(sizeof(SubBuffer));
-    sub_buffer->ptr = (char *)malloc(total_size);
+    sub_buffer->ptr = (unsigned char *)malloc(total_size);
     sub_buffer->total_size = total_size;
     sub_buffer->len = 0;
     return sub_buffer;
@@ -21,6 +21,10 @@ Buffer *app_buffer_init(int total_size)
     buffer->sub_buffer[1] = init_sub_buffer(total_size);
     buffer->read_index = 0;
     buffer->write_index = 1;
+
+    // 初始化读锁和写锁
+    pthread_mutex_init(&buffer->read_lock, NULL);
+    pthread_mutex_init(&buffer->write_lock, NULL);
     return buffer;
 }
 
@@ -118,5 +122,5 @@ int app_buffer_read(Buffer *buffer, char *data_buff, int buff_size)
     // 读完数据，解读锁
     log_debug("读完数据，解读锁");
     pthread_mutex_unlock(&buffer->read_lock);
-    return 0;
+    return len;
 }
