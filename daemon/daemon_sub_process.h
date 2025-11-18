@@ -12,6 +12,8 @@
 #include "log.h"
 
 #define MAX_FAIL_COUNT 5
+#define EXE_PATH "/usr/bin/gateway"  // 开发板 
+
 
 // 子进程结构体
 typedef struct

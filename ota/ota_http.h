@@ -9,7 +9,8 @@
 
 #define OTA_FILEINFO_URL "http://192.168.42.38:8000/fileinfo.json"
 #define OTA_DOWNLOAD_URL "http://192.168.42.38:8000/download/gateway"
-#define OTA_LOCAL_FILE "/home/wuhan/gateway.update"
+// #define OTA_LOCAL_FILE "/home/wuhan/gateway.update"//测试
+#define OTA_LOCAL_FILE "/root/gateway.update"
 
 /**
  * @brief 请求获取json数据

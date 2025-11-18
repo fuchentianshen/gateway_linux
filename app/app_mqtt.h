@@ -7,7 +7,7 @@
 #include "log.h"
 
 
-#define ADDRESS     "tcp://192.168.42.39:1883"
+#define ADDRESS     "tcp://192.168.42.38:1883"
 #define CLIENTID    "b253ba38-daf6-4b37-984f-5d8fdc6a1cfc" 
 #define TOPIC_GTC       "gateway_to_console"
 #define TOPIC_CTG       "console_to_gateway"

@@ -12,19 +12,19 @@ SubProcess *daemon_sub_process_init(char *cmd_param)
 int daemon_sub_process_checkStart(SubProcess *sub_process)
 {
     // 检查进程是否在运行，如果在运行正常结束
-    int status;
+    int status = 0;
     if (sub_process->pid > 0 && waitpid(sub_process->pid, &status, WNOHANG) == 0)
     {
         return 0;
     }
 
-    // 如果子进程以失败结束，则重启子进程
+    // 如果子进程以失败结束，则重启
     if (status != 0)
     {
         sub_process->fail_count++;
         if (sub_process->fail_count > MAX_FAIL_COUNT)
         {
-            // 重启子进程
+            // 重启
             reboot(RB_AUTOBOOT);
         }
     }
@@ -34,10 +34,9 @@ int daemon_sub_process_checkStart(SubProcess *sub_process)
     if (sub_process->pid == 0)
     {
         // 子进程
-        char *path = "gateway_test";
-        char *argv[] = {path, sub_process->cmd_param, NULL};
+        char *argv[] = {EXE_PATH, sub_process->cmd_param, NULL};
         log_debug("在子进程(%d)启动：%s", getpid(), sub_process->cmd_param);
-        execve(path, argv, NULL);
+        execve(EXE_PATH, argv, NULL);
         // execve失败
         _exit(EXIT_FAILURE);
     }

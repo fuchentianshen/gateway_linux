@@ -2,3 +2,9 @@
 *.o
 *.i
 *.s
+*.tar.gz
+
+
+output
+sysroot
+toolchain

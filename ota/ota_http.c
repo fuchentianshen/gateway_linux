@@ -27,7 +27,7 @@ char *ota_http_getJson(char *url)
     // 配置2：设置接收响应的回调函数
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, receive_callback);
     // 配置3：设置接收响应的回调函数的参数
-    char *json_buff = (char *)malloc(100);
+    char *json_buff = (char *)malloc(1024);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, json_buff);
 
     // 执行请求
