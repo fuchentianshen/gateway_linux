@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include "log.h"
 
-#define OTA_FILEINFO_URL "http://192.168.42.39:8000/fileinfo.json"
-#define OTA_DOWNLOAD_URL "http://192.168.42.39:8000/download/gateway"
+#define OTA_FILEINFO_URL "http://192.168.42.38:8000/fileinfo.json"
+#define OTA_DOWNLOAD_URL "http://192.168.42.38:8000/download/gateway"
 #define OTA_LOCAL_FILE "/home/wuhan/gateway.update"
 
 /**
